@@ -1,7 +1,10 @@
-# part 1
+# reading input
 f = open('input.txt', 'r')
 instr = f.read()
 f.close()
+
+# part 1
+
 floor = 0
 
 for x in instr:
