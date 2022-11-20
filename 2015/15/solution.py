@@ -5,7 +5,9 @@ f = open('input.txt', 'r')
 lines = f.readlines()
 f.close()
 
-# part 1 - getting input into a dict
+# part 1
+
+# getting input into a dict
 
 ingredients = {}
 
@@ -37,14 +39,6 @@ for i in range(teaspoons+1): # Sprinkles
             })
 
 
-# for i in range(teaspoons+1): # Butterscotch
-#     cinnamon = teaspoons - i
-#     permutations.append({
-#         'Butterscotch': i,
-#         'Cinnamon': cinnamon
-#     })
-    
-
 # calculate the total score of all cookies and identifying the top
 
 def get_top_score(permutations):
@@ -75,14 +69,6 @@ print(get_top_score(permutations))
 
 # part 2
 permutations = []
-
-# for i in range(teaspoons+1): # Butterscotch
-#     cinnamon = teaspoons - i
-#     if i * ingredients['Butterscotch']['calories'] + cinnamon * ingredients['Cinnamon']['calories'] == 500:
-#         permutations.append({
-#             'Butterscotch': i,
-#             'Cinnamon': cinnamon
-#         })
 
 # new permutations given the calories constraint
 for i in range(teaspoons+1): # Sprinkles
