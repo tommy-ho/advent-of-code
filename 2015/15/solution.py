@@ -20,7 +20,7 @@ for line in lines:
     
 print(ingredients)
 
-# part 1 - identifying all permutations
+# identifying all permutations
 
 teaspoons = 100
 permutations = []
@@ -38,19 +38,14 @@ for i in range(teaspoons+1): # Sprinkles
 
 
 # for i in range(teaspoons+1): # Butterscotch
-#     j = teaspoons - i
+#     cinnamon = teaspoons - i
 #     permutations.append({
 #         'Butterscotch': i,
-#         'Cinnamon': j
+#         'Cinnamon': cinnamon
 #     })
     
 
-# print(len(permutations))
-# print(permutations)
-
-# permutations = [{'Butterscotch': 44, 'Cinnamon': 56}] # code actually calculates this correctly, but is misidentifying the max
-
-# part 1 - calculate the total score of all cookies and identifying the top
+# calculate the total score of all cookies and identifying the top
 
 def get_top_score(permutations):
     top_score = -1 * sys.maxsize
@@ -75,5 +70,35 @@ def get_top_score(permutations):
         top_score = max(top_score, capacity * durability * flavor * texture)
 
     return top_score
+
+print(get_top_score(permutations))
+
+# part 2
+permutations = []
+
+# for i in range(teaspoons+1): # Butterscotch
+#     cinnamon = teaspoons - i
+#     if i * ingredients['Butterscotch']['calories'] + cinnamon * ingredients['Cinnamon']['calories'] == 500:
+#         permutations.append({
+#             'Butterscotch': i,
+#             'Cinnamon': cinnamon
+#         })
+
+# new permutations given the calories constraint
+for i in range(teaspoons+1): # Sprinkles
+    for j in range(teaspoons-i+1): # Butterscotch
+        for k in range(teaspoons-i-j+1): #Chocolate
+            candy = teaspoons - i - j - k
+
+            if i * ingredients['Sprinkles']['calories'] + \
+            j * ingredients['Butterscotch']['calories'] + \
+            k * ingredients['Chocolate']['calories'] + \
+            candy * ingredients['Candy']['calories'] == 500:
+                permutations.append({
+                    'Sprinkles': i,
+                    'Butterscotch': j,
+                    'Chocolate': k,
+                    'Candy': candy
+                })
 
 print(get_top_score(permutations))
