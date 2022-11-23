@@ -36,10 +36,14 @@ print(dp[-1][-1])
 
 # part 2 - brute force all combinations
 
-combos = []
-for i in range(1, len(containers)):
-    for combo in combinations(containers, i):
-        combos.append(combo)
+# combos = []
+# for i in range(1, len(containers)):
+#     for combo in combinations(containers, i):
+#         combos.append(combo)
+
+combos = [[]]
+for i in containers:
+    combos = combos + [combo + [i] for combo in combos]
 
 min_containers_used = sys.maxsize
 ans = 0
