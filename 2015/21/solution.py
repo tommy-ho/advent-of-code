@@ -40,12 +40,8 @@ rings['Defense + 1'] = {'Cost': 20, 'Damage': 0, 'Armor': 1}
 rings['Defense + 2'] = {'Cost': 40, 'Damage': 0, 'Armor': 2}
 rings['Defense + 3'] = {'Cost': 80, 'Damage': 0, 'Armor': 3}
 
-# nn, n1, n2, n3, n4, n5, n6, 11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 34, 35, 36, 45, 46, 56
-
 # returns true if player wins
 def battle(player, boss):
-    # print(player)
-    # print(boss)
     players_turn = True
     while player['Hit Points'] > 0 and boss['Hit Points'] > 0:
         if players_turn:
@@ -57,19 +53,13 @@ def battle(player, boss):
             dmg = boss['Damage'] - player['Armor']
             dmg = dmg if dmg > 0 else 1
             player['Hit Points'] -= dmg
-            players_turn = True
-        
-        php = player['Hit Points']
-        bhp = boss['Hit Points']
-        # print(f'player health {php} and boss health is {bhp}')
-        
+            players_turn = True    
     
     return boss['Hit Points'] <= 0
 
 # identify all combinations of equipment and run simulations
 
 loadouts = []
-cc = 0
 
 # loadouts are duplicated (rings1, ring2) vs (ring2, ring1), but otherwise works
 for w in weapons:
@@ -102,16 +92,23 @@ for w in weapons:
                 j['Spent'] += r2['Cost']
                 loadouts.append(j)
 
-# print(len(loadouts))
-
-
-# battle(loadouts[0], boss)
-
 lowest_cost = maxsize
 
-for p in loadouts:
+for p in deepcopy(loadouts):
     b = deepcopy(boss)
     if battle(p, b):
         lowest_cost = min(lowest_cost, p['Spent'])
 
 print(lowest_cost)
+
+
+# part 2
+
+highest_cost = maxsize * -1
+
+for p in deepcopy(loadouts):
+    b = deepcopy(boss)
+    if not battle(p, b):
+        highest_cost = max(highest_cost, p['Spent'])
+
+print(highest_cost)
