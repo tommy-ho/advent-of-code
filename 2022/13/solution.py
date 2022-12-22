@@ -56,3 +56,32 @@ for i in range(len(in_order)):
 
 print(ans)
 
+# part 2 - implement a sorting algo using the compare func
+
+# get rid of blank lines
+packets = []
+
+for i in range(len(lines)):
+    if lines[i] != '':
+        packet = None
+        exec('packet = ' + lines[i])
+        packets.append(packet)
+
+# add divider packets
+packets.append([[2]])
+packets.append([[6]])
+
+
+# bubble sort
+for i in range(len(packets)):
+    for j in range(len(packets)-1):
+        if compare(packets[j], packets[j+1]) == -1:
+            packets[j], packets[j+1] = packets[j+1], packets[j]
+
+ans = 1
+
+for i in range(len(packets)):
+    if packets[i] in ([[2]], [[6]]):
+        ans *= i+1
+
+print(ans)
