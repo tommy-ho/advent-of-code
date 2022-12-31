@@ -40,11 +40,7 @@ print(len(grid))
 # part 2
 
 max = 4000000
-grid = {}
-beacons = []
-
-x_counter = 0
-y_counter = 0
+sensors = {}
 
 for line in lines:
     split = line.split('=')
@@ -53,22 +49,43 @@ for line in lines:
     bx = int(split[3].split(',')[0])
     by = int(split[4].strip())
 
-    beacons.append((bx,by)) # add a list of beacons to remove from list later
-
     dist = abs(sx-bx) + abs(sy-by)
-
-    for row in range(max):            
-        if dist < abs(sy-row): # skip if row is too far from sensor
-            continue
-
-        start = sx - (dist - abs(sy-row))
-        end = sx + (dist - abs(sy-row))
-        for i in range(start, end + 1):
-            grid[i, row] = '#'
+    sensors[sx,sy] = dist
 
 
-for x in range(max):
-    for y in range(max):
-        if (x,y) not in grid:
-            print(f'{x}  {y}')
-            print(x*4000000 + y)
+
+def reachable(coord):
+    for s in sensors:
+        # if any sensor can reach this coord, return True
+        if sensors[s] >= abs(s[0] - coord[0]) + abs(s[1] - coord[1]):
+            return True
+    return False
+
+pos = None
+
+# iterate over every sensor's borders
+for s in sensors:
+    dist = sensors[s]
+
+    for i in range(dist):
+        # left borders
+        left_up = (s[0] - dist + i - 1, s[1] + i)
+        left_down = (s[0] - dist + i - 1, s[1] - i)
+        # right borders
+        right_up = (s[0] + dist - i + 1, s[1] + i)
+        right_down = (s[0] + dist - i + 1, s[1] - i)
+
+        for border in [left_up, left_down, right_up, right_down]:
+            if 0 <= border[0] <= max and 0 <= border[1] <= max and not reachable(border):
+                pos = border
+                break
+        
+        if pos is not None:
+            break
+    
+    if pos is not None:
+        break
+
+
+ans = pos[0] * 4000000 + pos[1]
+print(ans)
