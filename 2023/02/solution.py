@@ -35,3 +35,30 @@ for line in lines:
         ans += id
 
 print(ans)
+
+# part 2
+
+ans = 0
+
+for line in lines:
+    game, sets = line.split(": ")
+    id = int(game.split(" ")[1])
+    sets = sets.split("; ")
+    
+    max = {
+        "red": 0,
+        "green": 0,
+        "blue": 0
+    }
+
+    for set in sets:
+        counts = set.split(", ")
+        for count in counts:
+            num, color = count.split(" ")
+            num = int(num)
+            if num > max[color]:
+                max[color] = num
+
+    ans += (max["red"] * max["green"] * max["blue"])
+
+print(ans)
